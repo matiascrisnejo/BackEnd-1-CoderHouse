@@ -48,7 +48,7 @@ productsRoutes.get('/:pid', async(req, res) => {
     const pId = +req.params.pid;
     const product = await getSingleProductById(pId);
     if(!product){
-        return res.status(404).send({status: "erro", message: 'Product not found'});
+        return res.status(404).send({status: "error", message: 'Product not found'});
     }
     res.send({product})
 })
@@ -62,7 +62,7 @@ productsRoutes.post('/', async(req, res) => {
     const products = await getProducts()
     products.push(product)
     const isOk = await saveProducts(products)
-    if(isOk){
+    if(!isOk){
         return res.send({status: 'error', message: 'Product could not add'})
     } 
     res.send({status: 'ok', message:"product added"})
@@ -77,7 +77,7 @@ productsRoutes.delete('/:pid', async (req, res) => {
     const products = await getProducts()
     const filteredProducts = products.filter(p => p.id !== id)
     const isOk = await saveProducts(filteredProducts)
-    if(isOk){
+    if(!isOk){
         return res.status(404).send({status: 'error', message: 'something went wrong'})
     }
     res.send({status: 'ok', message: 'Product deleted'})
