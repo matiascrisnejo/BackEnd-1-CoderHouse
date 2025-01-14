@@ -1,20 +1,25 @@
-import express from "express";
-import ProductManager from "./ProductManager.js"
+import express from 'express';
 
-import routerProducts from "./routes/products.routes.js"
+import {ProductManager} from './ProductManager.js';
+import {CartManager} from "./CartManager.js"
+
+import routerCarts from "./routes/carts.router.js"
+import routerProducts from "./routes/products.router.js"
 
 const app = express();
-const port = 8080
+const port = 8080;
 
-//Midlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-export const productManager = new ProductManager(pathProducts);
+const pathProducts = "./db/products.json"
+const pathCarts = "./db/carts.json"
 
-//Routes
+export const productManager = new ProductManager(pathProducts)
+export const cartManager = new CartManager(pathCarts)
+
 app.use('/api/products', routerProducts);
+app.use('/api/carts', routerCarts);
 
 
-
-app.listen(8080, () => console.log("servidor con express"));
+app.listen(port, () => console.log("servidor con express"))
