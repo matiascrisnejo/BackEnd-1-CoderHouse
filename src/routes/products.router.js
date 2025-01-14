@@ -1,9 +1,16 @@
+<<<<<<< Updated upstream:src/routes/products.routes.js
 import { Router } from "express";
 import fs from 'fs';
 
 const productsRoutes = Router();
 
 const products = []
+=======
+import  express from 'express';
+import {productManager} from '../app.js';
+
+const router = express.Router()
+>>>>>>> Stashed changes:src/routes/products.router.js
 
 const getProducts = async () => {
     try {

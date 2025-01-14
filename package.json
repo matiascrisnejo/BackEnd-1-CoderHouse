@@ -2,17 +2,17 @@
   "name": "backend-1-coderhouse",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:watch":"nodemon src/app.js"
+    "start:watch": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/matiascrisnejo/BackEnd-1-CoderHouse.git"
   },
-  "type": "module",
   "keywords": [],
+  "type": "module",
   "author": "",
   "license": "ISC",
   "bugs": {
