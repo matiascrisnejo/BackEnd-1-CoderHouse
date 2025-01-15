@@ -5,7 +5,7 @@ const router = express.Router()
 
 const p = new ProductManager();
 
-router.get('/', async (req, res) => {
+router.get('/realTimeProducts', async (req, res) => {
     const products = p.getProducts();
     res.render('realTimeProducts', {
         products
