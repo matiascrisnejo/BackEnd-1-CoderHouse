@@ -5,8 +5,8 @@ import { __dirname } from "./utils.js"
 //import routerV from "./routes/views.router.js"
 import { Server } from "socket.io"
 import socketProducts from "./listeners/socketProducts.js"
-import connectToDB from "./Dao/config/config.server.js"
-import socketChat from "./listeners/socketChat.js"
+import connectToDB from "./Dao/config/index.js"
+//import socketChat from "./listeners/socketChat.js"
 //import routerC from "./routes/carts.router.js"
 import routerApp from "./routes/index.js"
 
@@ -39,4 +39,4 @@ const httpServer=app.listen(PORT, () => {
 const socketServer = new Server(httpServer)
 
 socketProducts(socketServer)
-socketChat(socketServer)
+//socketChat(socketServer)
