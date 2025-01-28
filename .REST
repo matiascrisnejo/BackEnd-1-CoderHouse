@@ -1,0 +1,25 @@
+GET http://localhost:8080/api/users
+
+###
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+    "first_name": "mati",
+    "last_name": "cris",
+    "email": "maticris@gmail.com",
+}
+###
+GET http://localhost:8080/api/users/sasas
+
+###
+PUT http://localhost:8080/api/users/sasas
+Content-Type: application/json
+
+{
+    "first_name": "mati",
+    "last_name": "cris",
+    "email": "maticris@gmail.com",
+}
+###
+DELETE http://localhost:8080/api/users/sasas
