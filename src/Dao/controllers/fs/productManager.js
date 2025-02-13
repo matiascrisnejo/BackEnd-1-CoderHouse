@@ -9,7 +9,7 @@ export class ProductManager{
     getProducts(){
         try {
             const data = fs.readFileSync(this.path, "utf8");
-            this.products = JSON.parse(data);
+            this.products = JSON.parse(data || "[]");
             return this.products;
         } catch (error) {
             console.error("Error al leer el archivo", error);
@@ -25,10 +25,12 @@ export class ProductManager{
             return productId;
         } else {
             console.log("Producto no encontrado");
+            return null;
         }    
     };
 
     addProduct(product){
+        this.getProducts()
         const { title, description, price, thumbnail, code, stock, category, status } = product;
 
         if (title === "" || description === "" || price === "" || thumbnail === "" || code === "" || stock === "" || category === "" || status === "") {
@@ -40,7 +42,7 @@ export class ProductManager{
         }
     
         const newProduct = {
-            id: this.products.length + 1,
+            id: this.products.length > 0 ? this.products[this.products.length - 1].id + 1 : 1,
             title: title,
             description: description,
             price: price,
@@ -55,7 +57,7 @@ export class ProductManager{
         console.log("Producto agregado correctamente.");
     
         try {
-            fs.writeFileSync(this.path, JSON.stringify(this.products));
+            fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
             console.log("producto guardado exitosamente");
             return newProduct;
         } catch (error) {
@@ -69,9 +71,9 @@ export class ProductManager{
         const productId = this.products.find (product => product.id === id);
         if (productId) {
             const Index = this.products.findIndex (product => product.id === id);
-            this.products[Index] = {id, ...productUpdate};
+            this.products[Index] = {...this.products[Index], ...productUpdate}
             try {
-                fs.writeFileSync(this.path, JSON.stringify(this.products));
+                fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
                 console.log("Archivo actualizado con éxito")    
             } catch (error) {
                 console.error("no se pudo actualizar el archivo", error)
@@ -88,7 +90,7 @@ export class ProductManager{
             const Index = this.products.findIndex (product => product.id === id);
             this.products.splice(Index, 1);
             try {
-                fs.writeFileSync(this.path, JSON.stringify(this.products));
+                fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
                 console.log("El producto se ha borrado con éxito")  
             } catch (error) {
                 console.error("no se pudo borrar el producto", error)
