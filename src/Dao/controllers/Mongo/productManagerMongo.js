@@ -1,7 +1,7 @@
 import { productsModel } from "../../models/products.model.js";
 
 export default class ProductManager{
-    async getProducts(page, limit, sortOrder, category){
+    async getProducts({page, limit, sortOrder, category}){
 
         try {
             const options = {

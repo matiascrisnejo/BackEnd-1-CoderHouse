@@ -19,7 +19,7 @@ routerV.get('/products', async (req, res) => {
         const sortOrder = req.query.sort ? req.query.sort : null;
         const category = req.query.category ? req.query.category : null;
 
-        const result = await pm.getProducts(page, limit, sortOrder, category);
+        const result = await pm.getProducts(req.query);
 
         res.render('products', {
             products: result.docs.map(product => product.toObject()), // Convierto a Objeto
