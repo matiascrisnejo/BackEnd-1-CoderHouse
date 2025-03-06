@@ -11,30 +11,52 @@ const pm = new ProductManager()
 const routerP = express.Router()
 
 
-routerP.get("/",async(req, res)=>{
-    const productList = await pm.getProducts(req.query)
-    res.json({productList})
-})
+routerP.get("/", async (req, res) => {
+    try {
 
-routerP.get("/:pid",async(req, res)=>{
-    const productFind = await pm.getProductById(req.params)
-    res.json({ status: "success", productFind })
-})
+        const { page, limit, sortOrder, category } = req.query;
+        
+        const productList = await pm.getProducts({ page, limit, sortOrder, category });
+        res.json({ productList });
+    } catch (error) {
+        res.status(500).json({ status: "error", message: "Error al obtener productos", error: error.message });
+    }
+});
 
-routerP.post("",async(req, res)=>{
-    const newproduct = await pm.addProducts(req.body)
-    res.json({ status: "success", newproduct })
-})
+routerP.get("/:pid", async (req, res) => {
+    try {
+        const productFind = await pm.getProductById(req.params.pid);
+        res.json({ status: "success", productFind });
+    } catch (error) {
+        res.status(500).json({ status: "error", message: "Error al obtener el producto", error: error.message });
+    }
+});
 
-routerP.put("/:pid", async(req, res)=>{
-    const updateproduct = await pm.updateProduct(req.params, req.body)
-    res.json({ status: "success", updateproduct })
-})
+routerP.post("", async (req, res) => {
+    try {
+        const newproduct = await pm.addProducts(req.body);
+        res.json({ status: "success", newproduct });
+    } catch (error) {
+        res.status(500).json({ status: "error", message: "Error al agregar el producto", error: error.message });
+    }
+});
 
-routerP.delete("/:pid", async(req, res)=>{
-    const id = parseInt(req.params.pid)
-    const deleteproduct = await pm.deleteProduct(id)
-    res.json({ status: "success", deleteproduct })
-})
+routerP.put("/:pid", async (req, res) => {
+    try {
+        const updateproduct = await pm.updateProduct(req.params.pid, req.body);
+        res.json({ status: "success", updateproduct });
+    } catch (error) {
+        res.status(500).json({ status: "error", message: "Error al actualizar el producto", error: error.message });
+    }
+});
+
+routerP.delete("/:pid", async (req, res) => {
+    try {
+        const deleteproduct = await pm.deleteProduct(req.params.pid);
+        res.json({ status: "success", deleteproduct });
+    } catch (error) {
+        res.status(500).json({ status: "error", message: "Error al eliminar el producto", error: error.message });
+    }
+});
 
 export default routerP;

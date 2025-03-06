@@ -6,10 +6,10 @@ export class ProductManager{
         this.path = "./db/products.json"
     }
 
-    getProducts(){
+    async getProducts() {
         try {
-            const data = fs.readFileSync(this.path, "utf8");
-            this.products = JSON.parse(data || "[]");
+            const data = await fs.readFile(this.path, "utf8");
+            this.products = JSON.parse(data);
             return this.products;
         } catch (error) {
             console.error("Error al leer el archivo", error);
@@ -17,32 +17,30 @@ export class ProductManager{
         }
     }
 
-    getProductById(pid){
-        this.getProducts()
-        const productId = this.products.find (product => product.id === pid);
-
+    async getProductById(pid) {
+        await this.getProducts();  // Asegurarse de que los productos estén cargados
+        const productId = this.products.find(product => product.id === pid);
+        
         if (productId) {
             return productId;
         } else {
             console.log("Producto no encontrado");
-            return null;
-        }    
+        }
     };
 
-    addProduct(product){
-        this.getProducts()
+    async addProduct(product) {
         const { title, description, price, thumbnail, code, stock, category, status } = product;
 
         if (title === "" || description === "" || price === "" || thumbnail === "" || code === "" || stock === "" || category === "" || status === "") {
             throw new Error("Debe completar todos los campos.");
         }
-    
+
         if (this.products.some((prod) => prod.code === code)) {
             throw new Error("El producto ya existe");
         }
-    
+
         const newProduct = {
-            id: this.products.length > 0 ? this.products[this.products.length - 1].id + 1 : 1,
+            id: this.products.length + 1, // Generar un ID para el producto
             title: title,
             description: description,
             price: price,
@@ -52,52 +50,56 @@ export class ProductManager{
             status: status,
             category: category,
         };
-    
+
         this.products.push(newProduct);
         console.log("Producto agregado correctamente.");
-    
+
         try {
-            fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
-            console.log("producto guardado exitosamente");
+            await fs.writeFile(this.path, JSON.stringify(this.products, null, 2));  // Indentado bonito
+            console.log("Producto guardado exitosamente");
             return newProduct;
         } catch (error) {
-            console.error("no se guardo el producto", error);
+            console.error("No se guardó el producto", error);
             throw error;
         }
     }
 
-    updateProduct(id, productUpdate) {
-        this.getProducts();
-        const productId = this.products.find (product => product.id === id);
+    async updateProduct(id, productUpdate) {
+        await this.getProducts();  // Asegurarse de cargar los productos antes de actualizar
+        const productId = this.products.find(product => product.id === id);
+        
         if (productId) {
-            const Index = this.products.findIndex (product => product.id === id);
-            this.products[Index] = {...this.products[Index], ...productUpdate}
+            const index = this.products.findIndex(product => product.id === id);
+            this.products[index] = { id, ...productUpdate };
+
             try {
-                fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
-                console.log("Archivo actualizado con éxito")    
+                await fs.writeFile(this.path, JSON.stringify(this.products, null, 2));
+                console.log("Archivo actualizado con éxito");
             } catch (error) {
-                console.error("no se pudo actualizar el archivo", error)
+                console.error("No se pudo actualizar el archivo", error);
             }
         } else {
-            console.log("No se encontro el producto");
-        }   
+            console.log("No se encontró el producto");
+        }
     };
 
-    deleteProduct(id) {
-        this.getProducts();
-        const productId = this.products.find (product => product.id === id);
+    async deleteProduct(id) {
+        await this.getProducts();  // Asegurarse de cargar los productos antes de eliminar
+        const productId = this.products.find(product => product.id === id);
+
         if (productId) {
-            const Index = this.products.findIndex (product => product.id === id);
-            this.products.splice(Index, 1);
+            const index = this.products.findIndex(product => product.id === id);
+            this.products.splice(index, 1);
+
             try {
-                fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
-                console.log("El producto se ha borrado con éxito")  
+                await fs.writeFile(this.path, JSON.stringify(this.products, null, 2));
+                console.log("El producto se ha borrado con éxito");
             } catch (error) {
-                console.error("no se pudo borrar el producto", error)
+                console.error("No se pudo borrar el producto", error);
             }
         } else {
-            console.log("No se encontro el producto");
-        }  
+            console.log("No se encontró el producto");
+        }
     };
 
 }

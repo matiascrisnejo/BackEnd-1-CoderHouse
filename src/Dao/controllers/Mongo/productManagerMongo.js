@@ -1,18 +1,22 @@
 import { productsModel } from "../../models/products.model.js";
 
 export default class ProductManager{
-    async getProducts({page, limit, sortOrder, category}){
-
+    async getProducts(req) {
         try {
+            // Usamos el spread operator para acceder a los parámetros directamente
+            const { page = 1, limit = 10, sortOrder, category } = req.query;
+    
             const options = {
-                page: page || 1,
-                limit: limit || 10,
-                sort: sortOrder ? {price: sortOrder === 'asc' ? 1 : -1} : null,
+                page,
+                limit,
+                sort: sortOrder ? { price: sortOrder === 'asc' ? 1 : -1 } : null,
                 lean: true
-            }
-            const query = category ? {category: category} : {}
-            const result = await productsModel.paginate(query, options)
-
+            };
+    
+            const query = category ? { category } : {};
+    
+            const result = await productsModel.paginate(query, options);
+    
             const response = {
                 status: "success",
                 payload: result.docs, // Los productos de la página actual
@@ -25,15 +29,15 @@ export default class ProductManager{
                 prevLink: result.hasPrevPage ? `/products?page=${result.prevPage}&limit=${limit}&sortOrder=${sortOrder}&category=${category}` : null,
                 nextLink: result.hasNextPage ? `/products?page=${result.nextPage}&limit=${limit}&sortOrder=${sortOrder}&category=${category}` : null
             };
-
-            return response
+    
+            return response;
         } catch (error) {
-            console.error("error al mostrar productos",error)
-            return { 
-                status: "error", 
-                message: "Hubo un problema al obtener los productos.", 
+            console.error("Error al mostrar productos", error);
+            return {
+                status: "error",
+                message: "Hubo un problema al obtener los productos.",
                 error: error.message
-            }
+            };
         }
     }
      async getProductsView(){
