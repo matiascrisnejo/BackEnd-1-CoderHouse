@@ -6,7 +6,7 @@ const router = express.Router()
 const p = new ProductManager();
 
 router.get('/realTimeProducts', async (req, res) => {
-    const products = p.getProducts();
+    const products = await p.getProducts();
     res.render('realTimeProducts', {
         products
     });

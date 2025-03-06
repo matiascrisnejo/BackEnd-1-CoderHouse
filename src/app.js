@@ -55,11 +55,11 @@ const httpServer = app.listen(port, () => console.log("servidor con express"))
 
 const socketServer = new Server(httpServer) 
 
-socketServer.on("connection" , (socket) => {
+socketServer.on("connection" , async (socket) => {
     console.log("Nueva Conexion")
 
     try {
-        const products = p.getProducts();
+        const products = await productManager.getProducts();
         socketServer.emit("products", products);
     } catch (error) {
         socketServer.emit('response', { status: 'error', message: error.message });
@@ -79,8 +79,8 @@ socketServer.on("connection" , (socket) => {
                     thumbnail: newProduct.thumbnail,
     
             }
-            const pushProduct = p.addProduct(objectProductNew);
-            const updatedListProd = p.getProducts();
+            const pushProduct = await productManager.addProduct(objectProductNew);
+            const updatedListProd = await productManager.getProducts();
             socketServer.emit("products", updatedListProd);
             socketServer.emit("response", { status: 'success' , message: pushProduct});
 
@@ -92,8 +92,8 @@ socketServer.on("connection" , (socket) => {
     socket.on("delete-product", async(id) => {
         try {
             const pid = parseInt(id)
-            const deleteProduct = p.deleteProduct(pid)
-            const updatedListProd = p.getProducts()
+            const deleteProduct = await productManager.deleteProduct(pid)
+            const updatedListProd = await productManager.getProducts()
             socketServer.emit("products", updatedListProd)
             socketServer.emit('response', { status: 'success' , message: "producto eliminado correctamente"});
         } catch (error) {
