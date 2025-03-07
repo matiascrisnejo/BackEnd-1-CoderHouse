@@ -23,3 +23,28 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:8080/api/users/sasas
+
+###
+POST http://localhost:8080/api/sessions/register
+Content-Type: application/json
+
+{
+    "email": "pepe@pepe.com",
+    "password": "coder",
+    "first_name": "Pepe",
+    "last_name": "Perez",
+    "age": 50
+}
+
+###
+
+POST http://localhost:8080/api/sessions/login
+Content-Type: application/json
+
+{
+    "email": "pepe@pepe.com",
+    "password": "coder",
+    "first_name": "Pepe",
+    "last_name": "Perez",
+    "age": 50
+}

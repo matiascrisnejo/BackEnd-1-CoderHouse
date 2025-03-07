@@ -10,10 +10,25 @@ import connectToDB from "./Dao/config/index.js"
 //import routerC from "./routes/carts.router.js"
 import routerApp from "./routes/index.js"
 
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
+
+
 const app = express()
 const PORT = 8080
 
-
+app.use(express.json())
+app.use(cookieParser("firmaSecreta"))
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://crisnejomatias:T2l2f4n4@matiascluster.wnvxrzy.mongodb.net/dbecomercenew?retryWrites=true&w=majority",
+        ttl: 60
+    }),
+    secret: "sesionSecreta",
+    resave: true,
+    saveUninitialized: true
+}))
 
 
 app.use(express.static(__dirname+"/public"))
