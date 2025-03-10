@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-
+import { cartsModel } from "./carts.model.js";
 const userSchema = new Schema({
     first_name: {
         type: String,
@@ -25,8 +25,15 @@ const userSchema = new Schema({
     rol: {
         type: String,
         default: "Usuario"
+    },
+
+    cart:{
+        type: Schema.Types.ObjectId,
+        ref:'carts'
     }
 })
+
+userSchema.post
 
 const userModel = model("users", userSchema)
 
