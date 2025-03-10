@@ -48,3 +48,68 @@ Content-Type: application/json
     "last_name": "Perez",
     "age": 50
 }
+
+###
+
+POST http://localhost:8080/api/sessions/register
+Content-Type: application/json
+
+{
+    "email": "julieta@julieta.com",
+    "password": "coder",
+    "first_name": "julieta",
+    "last_name": "Jalapeño",
+    "age": 30
+}
+
+###
+
+POST http://localhost:8080/api/sessions/login
+Content-Type: application/json
+
+{
+    "email": "julieta@julieta.com",
+    "password": "coder",
+    "first_name": "julieta",
+    "last_name": "Jalapeño",
+    "age": 30
+}
+
+###
+
+POST http://localhost:8080/api/sessions/register
+Content-Type: application/json
+
+{
+    "email": "caro@caro.com",
+    "password": "coder",
+    "first_name": "caro",
+    "last_name": "castro",
+    "age": 30
+}
+
+###
+
+POST http://localhost:8080/api/sessions/login
+Content-Type: application/json
+
+{
+    "email": "caro@caro.com",
+    "password": "coder",
+    "first_name": "caro",
+    "last_name": "castro",
+    "age": 30
+}
+
+###
+
+POST http://localhost:8080/api/sessions/login
+Content-Type: application/json
+
+{
+    "email": "matias.crisnejo@estudiantes.unahur.edu.ar",
+    "password": "coder",
+    "first_name": "caro",
+    "last_name": "castro",
+    "age": 30
+}
