@@ -1,6 +1,8 @@
 import express from "express"
 import CartManager from "../Dao/controllers/Mongo/cartManagerMongo.js"
 import { __dirname } from "../../utils/utils.js"
+import { authorization } from "../Dao/config/authorization.js"
+import passport from "passport"
 
 
 //esto es fs
@@ -33,7 +35,7 @@ const routerC =express.Router()
 //   }
 // });
 
-routerC.get("/:cid", async (req, res) => {
+routerC.get("/:cid", passport.authenticate('jwt') ,authorization('Usuario') ,async (req, res) => {
   try {
       const { cid } = req.params;
 
@@ -58,9 +60,7 @@ routerC.get("/:cid", async (req, res) => {
 });
 
 
-
-
-routerC.post("/", async (req, res) => {
+routerC.post("/", passport.authenticate('jwt') ,authorization('Usuario') ,async (req, res) => {
   try {
     const cart = await cm.createCart();
     res.status(201).json({ result: "success", payload: cart });
@@ -70,7 +70,7 @@ routerC.post("/", async (req, res) => {
   }
 });
 
-routerC.post("/:cid/products/:pid", async (req, res) => {
+routerC.post("/:cid/products/:pid", passport.authenticate('jwt') ,authorization('Usuario') ,async (req, res) => {
   try {
     const { cid, pid } = req.params;
     const cart = await cm.addProductToCart(cid, pid);
@@ -86,7 +86,7 @@ routerC.post("/:cid/products/:pid", async (req, res) => {
   }
 });
 
-routerC.delete("/:cid/products/:pid", async (req, res) => {
+routerC.delete("/:cid/products/:pid", passport.authenticate('jwt') ,authorization('Usuario') ,async (req, res) => {
   try {
     const { cid, pid } = req.params;
     const result = await cm.deleteProduct(cid, pid);
@@ -102,7 +102,7 @@ routerC.delete("/:cid/products/:pid", async (req, res) => {
   }
 });
 
-routerC.put("/:cid", async (req, res) => {
+routerC.put("/:cid", passport.authenticate('jwt') ,authorization('Usuario') ,async (req, res) => {
   try {
     const { cid } = req.params;
     const result = await cm.updateCart(cid);
@@ -118,7 +118,7 @@ routerC.put("/:cid", async (req, res) => {
   }
 });
 
-routerC.put("/:cid/products/:pid", async (req, res) => {
+routerC.put("/:cid/products/:pid", passport.authenticate('jwt') ,async (req, res) => {
   try {
     const { cid, pid } = req.params;
     const { quantity } = req.body;
@@ -142,7 +142,7 @@ routerC.put("/:cid/products/:pid", async (req, res) => {
 });
 
 
-routerC.delete("/:cid", async (req, res) => {
+routerC.delete("/:cid", passport.authenticate('jwt') ,async (req, res) => {
   try {
     const { cid } = req.params;
     const result = await cm.deleteAllProducts(cid);

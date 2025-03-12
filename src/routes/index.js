@@ -13,6 +13,9 @@ router.use('/api/carts', routerCarts);
 
 router.use('/api/users', usersRouter)
 router.use('/api/sessions', sessionsRouter)
+router.use('*', (req, res) => {
+    res.status(404).send('Ruta no encontrada')
+})
 
 
 
