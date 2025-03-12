@@ -33,7 +33,17 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.post
+userSchema.post('save', async function name(userCreated){
+    try {
+        const newCart = await cartsModel.create({products: []})
+        await model('users').findByIdAndUpdate(userCreated._id, { //actualiza la prop cart del usuario creado anteiamente
+            cart: newCart._id
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+})
 
 const userModel = model("users", userSchema)
 

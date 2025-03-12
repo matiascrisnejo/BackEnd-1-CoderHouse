@@ -113,3 +113,56 @@ Content-Type: application/json
     "last_name": "castro",
     "age": 30
 }
+
+###
+POST http://localhost:8080/api/sessions/register
+Content-Type: application/json
+
+{
+    "first_name": "Pedro",
+    "last_name": "Parker",
+    "age": 34,
+    "email": "pedro@pedro.com",
+    "password": "1234"
+}
+
+###
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+    "title": "l",
+    "description": "l",
+    "category": "Lacteos",
+    "thumbnail": "https://i.ibb.co/nngfHbZ/puma.png|",
+    "code": "l",
+    "price": 10,
+    "stock": 4
+}
+
+
+###
+GET http://localhost:8080/api/products
+
+###
+GET http://localhost:8080/api/products?limit=5&page=2
+
+###
+GET http://localhost:8080/api/products/67d050422ecd90fbe2e8ceac
+
+###
+PUT  http://localhost:8080/api/products/67d050422ecd90fbe2e8ceac
+Content-Type: application/json
+
+{
+    "title": "j",
+    "description": "j",
+    "category": "Legumbres",
+    "thumbnail": "https://i.ibb.co/nngfHbZ/puma.png|",
+    "code": "j",
+    "price": 5,
+    "stock": 4
+}
+
+###
+DELETE  http://localhost:8080/api/products/67d050422ecd90fbe2e8ceac

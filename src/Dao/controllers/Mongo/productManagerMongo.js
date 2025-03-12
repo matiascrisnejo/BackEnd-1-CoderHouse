@@ -1,14 +1,12 @@
 import { productsModel } from "../../models/products.model.js";
 
 export default class ProductManager{
-    async getProducts(req) {
+    async getProducts({ page, limit, sortOrder, category }) {
         try {
-            // Usamos el spread operator para acceder a los parámetros directamente
-            const { page = 1, limit = 10, sortOrder, category } = req.query;
     
             const options = {
-                page,
-                limit,
+                page: parseInt(page) || 1,
+                limit: parseInt(limit) || 10,
                 sort: sortOrder ? { price: sortOrder === 'asc' ? 1 : -1 } : null,
                 lean: true
             };
