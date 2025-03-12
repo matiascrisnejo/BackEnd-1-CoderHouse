@@ -1,6 +1,6 @@
 import express from "express"
 import CartManager from "../Dao/controllers/Mongo/cartManagerMongo.js"
-import { __dirname } from "../utils.js"
+import { __dirname } from "../../utils/utils.js"
 
 
 //esto es fs
