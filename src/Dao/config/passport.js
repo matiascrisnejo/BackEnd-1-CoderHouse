@@ -1,12 +1,24 @@
 import passport from "passport";
 import local from 'passport-local'
 import GithubStrategy from 'passport-github2'
-import { validatePassword, hashPassword } from "../../../utils/utils.js";
+import { validatePassword, hashPassword } from "../../utils.js";
 import userModel from "../models/users.models.js";
+import jwt from 'passport-jwt';
 
 
 
 const localStrategy = local.Strategy;//defino la estrateguia
+const JWTStrategy = jwt.Strategy
+const ExtractJWT = jwt.ExtractJwt
+
+const cookieExtractor = (req) =>{
+    let token = null
+    if(req.cookies){
+        token = req.cookies['coderSession']
+    }
+    console.log(token);
+    
+}
 
 const initializatePassword = () =>{
     passport.use('register', new localStrategy({
@@ -76,6 +88,20 @@ const initializatePassword = () =>{
         } catch (e) {
             return done(e)
         }
+    }))
+
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: "coder1234"
+    }, async (jwt_payload, done) => {
+        try {
+            console.log(jwt_payload);
+            return done(null, jwt_payload)
+        } catch (error) {
+            return done(error)
+        }
+        
+        
     }))
 
     //pasos necesarios para generar una session y manejarnos via http

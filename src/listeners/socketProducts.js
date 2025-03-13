@@ -1,6 +1,6 @@
 //import ProductManager from "../Dao/controllers/fs/productManager.js"
 import ProductManager from "../Dao/controllers/Mongo/productManagerMongo.js"
-import { __dirname } from "../../utils/utils.js"
+import { __dirname } from "../utils.js"
 
 const pm = new ProductManager()
 

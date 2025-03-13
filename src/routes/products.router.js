@@ -1,6 +1,8 @@
 import express from "express"
 import ProductManager from "../Dao/controllers/Mongo/productManagerMongo.js"
-import { __dirname } from "../../utils/utils.js"
+import { __dirname } from "../utils.js"
+import { authorization } from "../Dao/config/authorization.js"
+import passport from "passport"
 
 
 //esto es con fs
@@ -11,7 +13,7 @@ const pm = new ProductManager()
 const routerP = express.Router()
 
 
-routerP.get("/", async (req, res) => {
+routerP.get("/", passport.authenticate('jwt') ,async (req, res) => {
     try {
 
         const { page, limit, sortOrder, category } = req.query;
@@ -23,7 +25,7 @@ routerP.get("/", async (req, res) => {
     }
 });
 
-routerP.get("/:pid", async (req, res) => {
+routerP.get("/:pid", passport.authenticate('jwt') ,async (req, res) => {
     try {
         const productFind = await pm.getProductById(req.params.pid);
         res.json({ status: "success", productFind });
@@ -32,7 +34,7 @@ routerP.get("/:pid", async (req, res) => {
     }
 });
 
-routerP.post("", async (req, res) => {
+routerP.post("", passport.authenticate('jwt') ,authorization('Admin') ,async (req, res) => {
     try {
         const newproduct = await pm.addProducts(req.body);
         res.json({ status: "success", newproduct });
@@ -41,7 +43,7 @@ routerP.post("", async (req, res) => {
     }
 });
 
-routerP.put("/:pid", async (req, res) => {
+routerP.put("/:pid", passport.authenticate('jwt') ,authorization('Admin') ,async (req, res) => {
     try {
         const updateproduct = await pm.updateProduct(req.params.pid, req.body);
         res.json({ status: "success", updateproduct });
@@ -50,7 +52,7 @@ routerP.put("/:pid", async (req, res) => {
     }
 });
 
-routerP.delete("/:pid", async (req, res) => {
+routerP.delete("/:pid", passport.authenticate('jwt') ,authorization('Admin') ,async (req, res) => {
     try {
         const deleteproduct = await pm.deleteProduct(req.params.pid);
         res.json({ status: "success", deleteproduct });
