@@ -1,7 +1,7 @@
 import passport from "passport";
 import local from 'passport-local'
 import GithubStrategy from 'passport-github2'
-import { validatePassword, hashPassword } from "../../../utils/utils.js";
+import { validatePassword, hashPassword } from "../../utils.js";
 import userModel from "../models/users.models.js";
 import jwt from 'passport-jwt';
 
