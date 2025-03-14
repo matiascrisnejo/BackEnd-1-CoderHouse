@@ -45,24 +45,9 @@ export const githubLogin = (req, res) => {
             httpOnly: true,
             secure: false, //evitar errores de https
             maxAge: 86400000 //un dia en milisegundos
-        }).redirect("/api/products")
+        }).json({message: 'Usuario logueado correctamente'})
     } catch (e) {
         res.status(500).json({message: e})
     }
 }
 
-export const viewRegister = (req, res) => {
-    res.status(200).render('templates/register', { 
-        title: 'Registro de Usuario',
-        url_js: '/js/register.js',
-        url_css: '/css/main.css'
-    })
-}
-
-export const viewLogin = (req, res) => {
-    res.status(200).render('templates/login', { 
-        title: 'Inicio de Sesion de Usuarios',
-        url_js: '/js/login.js',
-        url_css: '/css/main.css'
-    })
-}

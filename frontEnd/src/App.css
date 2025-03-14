@@ -1,0 +1,35 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
+.form-session {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: whitesmoke;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgb(0,0,0,0.1);
+  width: 75vh;
+}
+
+.title-form {
+  padding-right: 10px;
+}
+.form-session input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.form-session button {
+  padding: 5px;
+  background-color: greenyellow;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}

@@ -1,6 +1,5 @@
 import express from "express"
 //import routerP from "./routes/product.router.js"
-import handlebars from "express-handlebars"
 import { __dirname } from "./utils.js"
 //import routerV from "./routes/views.router.js"
 import { Server } from "socket.io"
@@ -16,7 +15,7 @@ import MongoStore from 'connect-mongo'
 
 import passport from "passport"
 import initializatePassword from "./Dao/config/passport.js"
-import path from "path"
+
 
 
 const app = express()
@@ -35,15 +34,6 @@ app.use(session({
 }))
 
 
-//app.use(express.static(__dirname+"/public"))
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Obtener el directorio raíz del proyecto
-const viewsPath = path.join(__dirname, 'views');
-
-app.engine("handlebars",handlebars.engine())
-app.set("views", viewsPath);
-app.set("view engine","handlebars")
 
 app.use(routerApp)
 
