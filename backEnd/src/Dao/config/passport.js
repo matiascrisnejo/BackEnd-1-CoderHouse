@@ -17,6 +17,7 @@ const cookieExtractor = (req) =>{
         token = req.cookies['coderSession']
     }
     console.log(token);
+    return token
     
 }
 
