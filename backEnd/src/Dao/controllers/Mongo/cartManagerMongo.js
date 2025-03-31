@@ -1,5 +1,5 @@
 import { cartsModel } from "../../models/carts.model.js"
-import ProductManager from "../Mongo/productManagerMongo.js"
+import ProductManager from "./productManagerMongo.js"
 
 const pm = new ProductManager()
 
