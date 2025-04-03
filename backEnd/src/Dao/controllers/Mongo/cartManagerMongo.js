@@ -169,13 +169,13 @@ export const checkout = async (req, res) => {
             const currentProduct = await productsModel.findById(producto._id);
             
             if (currentProduct.stock - prod.quantity < 0) {
-                prodSinStock.push(currentProduct._id.toString()); // Guardamos como string
+                prodSinStock.push(currentProduct._id.toString()); // se guardo como string
             } else {
                 totalAmount += currentProduct.price * prod.quantity;
             }
         }
 
-        // Si todos los productos tienen stock suficiente
+        // si hay stock suficiente
         if (prodSinStock.length === 0) {
             // Descuento el stock de cada producto
             for (const prod of cart.products) {
@@ -184,7 +184,7 @@ export const checkout = async (req, res) => {
                 await producto.save(); 
             }
 
-            // Crear el ticket de compra
+            // Creo el ticket 
             const newTicket = await ticketModel.create({
                 code: crypto.randomUUID(),
                 amount: totalAmount,
@@ -192,16 +192,16 @@ export const checkout = async (req, res) => {
                 products: cart.products
             });
 
-            // Limpiar el carrito
+            // Limpio el carrito
             await cartsModel.findByIdAndUpdate(cartId, { products: [] });
 
             return res.status(200).send(newTicket);
         } else {
-            // Si hay productos sin stock, eliminar esos productos del carrito
-            // Cambié el filtro para que funcione correctamente con los tipos de datos
+            // Si hay productos sin stock, elimino producto del carrito
+            
             cart.products = cart.products.filter(prod => !prodSinStock.includes(prod.product._id.toString()));
 
-            // Actualizar el carrito en la base de datos
+            // Actualizar el carrito en BBD
             await cartsModel.findByIdAndUpdate(cartId, { products: cart.products });
 
             return res.status(400).send({
