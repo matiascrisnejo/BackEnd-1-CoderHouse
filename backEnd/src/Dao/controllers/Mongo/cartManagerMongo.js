@@ -152,7 +152,7 @@ export default class CartManager{
 export const checkout = async (req, res) => {
     try {
         const cartId = req.params.cid;
-        const cart = await cartsModel.findById(cartId).populate('products.product'); // Asegúrate de hacer el populate
+        const cart = await cartsModel.findById(cartId).populate('products.product'); 
 
         if (!cart) {
             return res.status(404).send({ message: 'Carrito no existe' });
@@ -161,21 +161,19 @@ export const checkout = async (req, res) => {
         const prodSinStock = [];
         let totalAmount = 0;
 
-        // Verifico el stock 
+        // Verifico el stock
         for (const prod of cart.products) {
             const producto = prod.product; 
 
-            //verifico si el stock cambio
+            // Verifico si el stock cambió
             const currentProduct = await productsModel.findById(producto._id);
             
-            if (producto.stock - prod.quantity < 0) {
-                prodSinStock.push(producto._id); // Producto sin stock suficiente
+            if (currentProduct.stock - prod.quantity < 0) {
+                prodSinStock.push(currentProduct._id.toString()); // Guardamos como string
             } else {
-                totalAmount += producto.price * prod.quantity; // Sumar el precio
+                totalAmount += currentProduct.price * prod.quantity;
             }
         }
-
-        console.log("Total Amount:", totalAmount); // Depuración: Verifica el totalAmount
 
         // Si todos los productos tienen stock suficiente
         if (prodSinStock.length === 0) {
@@ -183,7 +181,7 @@ export const checkout = async (req, res) => {
             for (const prod of cart.products) {
                 const producto = prod.product;
                 producto.stock -= prod.quantity;
-                await producto.save(); // Guardar el nuevo stock
+                await producto.save(); 
             }
 
             // Crear el ticket de compra
@@ -200,7 +198,8 @@ export const checkout = async (req, res) => {
             return res.status(200).send(newTicket);
         } else {
             // Si hay productos sin stock, eliminar esos productos del carrito
-            cart.products = cart.products.filter(prod => !prodSinStock.includes(prod.product.toString()));
+            // Cambié el filtro para que funcione correctamente con los tipos de datos
+            cart.products = cart.products.filter(prod => !prodSinStock.includes(prod.product._id.toString()));
 
             // Actualizar el carrito en la base de datos
             await cartsModel.findByIdAndUpdate(cartId, { products: cart.products });
@@ -215,3 +214,4 @@ export const checkout = async (req, res) => {
         return res.status(500).send({ message: e.message });
     }
 };
+

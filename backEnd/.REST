@@ -24,30 +24,7 @@ Content-Type: application/json
 ###
 DELETE http://localhost:8080/api/users/sasas
 
-###
-POST http://localhost:8080/api/sessions/register
-Content-Type: application/json
 
-{
-    "email": "franco@franco.com",
-    "password": "coder",
-    "first_name": "Franco",
-    "last_name": "Franquez",
-    "age": 45
-}
-
-###
-
-POST http://localhost:8080/api/sessions/login
-Content-Type: application/json
-
-{
-    "email": "franco@franco.com",
-    "password": "coder",
-    "first_name": "Franco",
-    "last_name": "Franquez",
-    "age": 45
-}
 
 ###
 
@@ -169,9 +146,37 @@ DELETE  http://localhost:8080/api/products/67d050422ecd90fbe2e8ceac
 
 
 ###
-POST  http://localhost:8080/api/carts/67ec26058263a6eba050a031/products/67d05b4ac89a9ed631d7cf94
+POST http://localhost:8080/api/sessions/register
 Content-Type: application/json
 
 {
-    "quantity": 2
+    "email": "franco@franco.com",
+    "password": "coder",
+    "first_name": "Franco",
+    "last_name": "Franquez",
+    "age": 45
 }
+
+###
+
+POST http://localhost:8080/api/sessions/login
+Content-Type: application/json
+
+{
+    "email": "franco@franco.com",
+    "password": "coder",
+    "first_name": "Franco",
+    "last_name": "Franquez",
+    "age": 45
+}
+
+###
+POST  http://localhost:8080/api/carts/67eeda9b767b2ecfd1af88cc/products/67d05b4ac89a9ed631d7cf94
+Content-Type: application/json
+
+{
+    "quantity": 3
+}
+
+###
+POST http://localhost:8080/api/carts/67eeda9b767b2ecfd1af88cc/purchase
