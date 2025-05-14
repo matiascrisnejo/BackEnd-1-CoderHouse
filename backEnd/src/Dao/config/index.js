@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
-const uri = "mongodb+srv://crisnejomatias:T2l2f4n4@matiascluster.wnvxrzy.mongodb.net/dbecomercenew?retryWrites=true&w=majority"
-
+//const uri = "mongodb+srv://crisnejomatias:T2l2f4n4@matiascluster.wnvxrzy.mongodb.net/dbecomercenew?retryWrites=true&w=majority"
+const uri = process.env.MONGO_URL
 const connectToDB = () =>{
     try {
         mongoose.connect(uri)
