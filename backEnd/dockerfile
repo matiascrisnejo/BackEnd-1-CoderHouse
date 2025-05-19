@@ -1,0 +1,16 @@
+# se indica la imagen base del proyecto
+FROM node
+
+# se establece el nombre de la app / directorio de trabajo
+WORKDIR /coderserver-70435
+
+# se copian los archivos de la app al contenedor
+COPY package.json ./
+RUN npm install
+COPY . .
+
+# se expone el puerto de la app
+EXPOSE 8080
+
+# se define el comando para iniciar la app
+CMD ["npm", "start"]

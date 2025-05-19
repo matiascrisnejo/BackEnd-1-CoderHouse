@@ -1,5 +1,7 @@
 import Product from "../models/products.model.js";
 import User from "../models/users.model.js";
+import Cart from "../models/carts.model.js";
+
 
 class MongoManager{
     constructor(model){
@@ -19,5 +21,6 @@ class MongoManager{
 
 const productsManager = new MongoManager(Product)
 const usersManager = new MongoManager(User)
+const cartsManager = new MongoManager(Cart)
 
-export {productsManager, usersManager}
+export {productsManager, usersManager, cartsManager}

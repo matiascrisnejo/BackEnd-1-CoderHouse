@@ -10,8 +10,13 @@
     "artillery-pocos": "artillery quick --count 500 --num 2 http://localhost:8080/api/sumar/pocos -o ./test/artillery/pocos.json",
     "artillery-muchos": "artillery quick --count 500 --num 2 http://localhost:8080/api/sumar/muchos -o ./test/artillery/muchos.json",
     "artillery-flujo": "artillery run ./test/artillery/flow/config.yaml -o ./test/artillery/flow/flujo.json",
-    "artillery-reporte": "artillery report ./test/artillery/flow/flujo.json"
-
+    "artillery-reporte": "artillery report ./test/artillery/flow/flujo.json",
+    "build-image": "docker build -t coderserver-70435 .",
+    "run-image": "docker run -p 8080:8080 coderserver-70435",
+    "retag-image": "docker tag coderserver-70435 matycris/coderserver1.0.0",
+    "push-image": "docker push matycris/coderserver1.0.0",
+    "apply-manifest": "kubectl apply -f manifest.yaml",
+    "service-mini": "minikube service codercommerce-service"
   },
   "keywords": [],
   "author": "",
@@ -19,13 +24,19 @@
   "description": "",
   "dependencies": {
     "artillery-plugin-metrics-by-endpoint": "^1.17.0",
+    "bcrypt": "^6.0.0",
     "comander": "^0.0.1-security",
     "commander": "^13.1.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-compression": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
