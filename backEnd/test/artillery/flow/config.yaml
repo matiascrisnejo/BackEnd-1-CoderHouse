@@ -1,0 +1,30 @@
+config:
+  plugin:
+    metrics by endpoint: {}
+  target: "http://localhost:8080/api"
+  phases:
+    - duration: 20
+      arrivalRate: 10
+scenarios:
+  - name: login, create & read a product & singout
+    flow:
+      - log: LOGIN
+      - post:
+          url: /auth/login
+          json:
+            email: maty@coder.com
+            password: hola1234
+      - log: CREATE PRODUCT
+      - post:
+          url: /products
+          json:
+            title: producto prueba
+          capture:
+            - json: "$.response._id"
+              as: "pid"
+      - log: GET PRODUCT
+      - get:
+          url: /products/{{ pid }}
+      - log: SIGNOUT
+      - post:
+          url: /auth/signout
