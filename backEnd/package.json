@@ -16,7 +16,10 @@
     "retag-image": "docker tag coderserver-70435 matycris/coderserver1.0.0",
     "push-image": "docker push matycris/coderserver1.0.0",
     "apply-manifest": "kubectl apply -f manifest.yaml",
-    "service-mini": "minikube service codercommerce-service"
+    "service-mini": "minikube service codercommerce-service",
+    "mocha": "mocha ./test/mocha",
+    "chai": "mocha ./test/chai",
+    "super": "mocha ./test/supertest"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +45,8 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.8.0"
+    "@faker-js/faker": "^9.8.0",
+    "mocha": "^11.6.0",
+    "supertest": "^7.1.1"
   }
 }

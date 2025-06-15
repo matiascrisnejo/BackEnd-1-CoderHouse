@@ -24,7 +24,7 @@ passport.use(
           return done(null, null, { message: "Invalid credentials", statusCode: 401 });
         }
         req.body.password = createHash(password)
-        const user = await usersManager.create(req.body);
+        const user = await usersManager.createOne(req.body);
         done(null, user);
       } catch (error) {
         done(error);
@@ -82,7 +82,7 @@ passport.use(
             avatar: profile.photos[0].value,
             password: createHash(profile.id),
           };
-          user = await User.create(user);
+          user = await User.createOne(user);
         }
         const token = createToken({
           email: user.email,
