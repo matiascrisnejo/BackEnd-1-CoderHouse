@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser'
 import compression from 'express-compression'
 import cluster from 'cluster'
 import { cpus } from 'os'
+import {serve, setup} from 'swagger-ui-express'
+import swaggerSpec from './src/helpers/swagger.helpers.js'
 import dbConnect from './src/helpers/dcConnect.helper.js'
 import indexRouter from './src/routers/index.router.js'
 import winston from './src/middlewares/winston.mid.js'
@@ -49,7 +51,7 @@ server.use(express.json())
 server.use(winston)
 server.use(express.urlencoded({extended: true}))
 server.use(express.static('public'))
-
+server.use("/api/docs",serve, setup(swaggerSpec))
 
 
 //router settings

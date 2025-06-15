@@ -1,0 +1,416 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          description: Nombre del producto
+          type: string
+        description:
+          description: Breve descripcion del producto
+          type: string
+        category:
+          description: Rubro al que pertenece el producto
+          type: string
+        image:
+          description: Imagen del producto (URL)
+          type: string
+        price:
+          description: Monto a pagar por el producto
+          type: number
+        stock:
+          description: Unidades disponibles del producto
+          type: number
+        onsale:
+          description: Producto en oferta 
+          type: boolean
+        owner_id:
+          description: Identificación del dueño del producto 
+          type: string
+      example:
+        title: "Producto 1"
+        description: "Descripcion producto 1"
+        category: "Categoria del producto 1"
+        image: URL del producto 1
+        price: 100
+        stock: 100
+        onsale: true
+        owner_id: "6828fd7831a573c2ad36da96"
+  securitySchemes:
+    cookieAuth:
+    type: apiKey
+    in: cookie
+    name: token
+  responses:
+    error400:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/products
+        error: Invalid data
+    error401:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/products
+        error: Invalid credentials
+    error403:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/products
+        error: Forbidden
+    error500:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/products
+        error: Fatal error
+
+paths:
+  /api/products:
+    post:
+      summary: Crea y agrega un producto a la base de datos
+      tags:
+        - Product
+      requestBody:
+       required: true
+       content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Creación de producto exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Metodo con el cual se realizó la solicitud
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  title: "Producto 1"
+                  description: "Descripcion producto 1"
+                  category: "Categoria del producto 1"
+                  image: URL del producto 1
+                  price: 100
+                  stock: 100
+                  onsale: true
+                  owner_id: "6828fd7831a573c2ad36da96"
+
+        400:
+          description: Falta algún dato válido para la creación del producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error400'
+        401:
+          description: Credenciales inválidas para la creación del producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error401'
+        500:
+          description: Error del lado del servidor al iniciar sesión
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error500'
+    get:
+      summary: Ve los datos de los productos de la base de datos (puede incluir un filtro)
+      tags:
+        - Product
+      responses:
+        200:
+          description: Se observa el Listado de productos completo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Metodo con el cual se realizó la solicitud
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  title: "Producto 2"
+                  description: "Descripcion producto 2"
+                  category: "Categoria del producto 2"
+                  image: URL del producto 2
+                  price: 100
+                  stock: 100
+                  onsale: true
+                  owner_id: "6828fd7831a573c2ad36da96"
+
+        400:
+          description: Falta algún dato para visualizar los productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error400'
+        401:
+          description: Credenciales inválidas para la visualización del producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error401'
+        500:
+          description: Error del lado del servidor al intentar ver los productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error500'
+
+  /api/products/{id}:
+    get:
+      summary: Ve los datos de un producto de la base de datos
+      tags:
+        - Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Se observa el producto solicitado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Metodo con el cual se realizó la solicitud
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  title: "Producto 3"
+                  description: "Descripcion producto 3"
+                  category: "Categoria del producto 3"
+                  image: URL del producto 3
+                  price: 100
+                  stock: 100
+                  onsale: true
+                  owner_id: "6828fd7831a573c2ad36da96"
+
+        400:
+          description: Falta algún dato para visualizar el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error400'
+        401:
+          description: Credenciales inválidas para la visualización del producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error401'
+        500:
+          description: Error del lado del servidor al intentar ver el productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error500'
+    put:
+      summary: Actualiza un producto de la base de datos
+      tags:
+        - Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  description: Nombre del producto a comercializar
+                  type: string
+                category:
+                  description: Rubro al que pertenece el producto
+                  type: string
+                image:
+                  description: Imagen representativa del producto (URL)
+                  type: string
+                stock:
+                  description: Unidades disponibles del producto para vender
+                  type: number
+                onsale:
+                  description: Descripción de un producto en oferta
+                  type: boolean
+              example:
+                title: Producto 4
+                category: Categoria del producto 4
+                image: URL del producto 4
+                stock: 100
+                onsale: true
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Se reemplazo el producto solicitado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Metodo con el cual se realizó la solicitud
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  title: "Producto 5"
+                  description: "Descripcion producto 5"
+                  category: "Categoria del producto 5"
+                  image: URL del producto 5
+                  price: 100
+                  stock: 100
+                  onsale: true
+                  owner_id: "6828fd7831a573c2ad36da96"
+
+        400:
+          description: Falta algún dato para editar el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error400'
+        401:
+          description: Credenciales inválidas para la editar del producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error401'
+        500:
+          description: Error del lado del servidor al intentar editar el productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error500'
+    delete:
+      summary: Elimina un producto de la base de datos
+      tags:
+        - Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Se observa el producto solicitado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Metodo con el cual se realizó la solicitud
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  title: "Producto 3"
+                  description: "Descripcion producto 3"
+                  category: "Categoria del producto 3"
+                  image: URL del producto 3
+                  price: 100
+                  stock: 100
+                  onsale: true
+                  owner_id: "6828fd7831a573c2ad36da96"
+
+        400:
+          description: Falta algún dato para elimnar el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error400'
+        401:
+          description: Credenciales inválidas para eliminar el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error401'
+        500:
+          description: Error del lado del servidor al intentar eliminar el productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error500'

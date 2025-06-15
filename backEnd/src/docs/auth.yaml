@@ -1,0 +1,158 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          description: Nombre del usuario
+          type: string
+        date:
+          description: Fecha de nacimiento del usuario
+          type: date
+        email:
+          description: Correo electronico del usuario
+          type: string
+          format: email
+        password:
+          description: Contraseña para iniciar sesión del usuario
+          type: string
+        avatar:
+          description: Imagen del usuario
+          type: string
+        role:
+          description: Rol que ocupa el usuario en el servidor
+          type: string
+      example:
+        name: matias
+        date: 1991-02-25
+        email: matias@coder.com
+        password: hola1234
+        avatar: https://cdn-icons-png.flaticon.com/512/266/266033.png
+        role: ADMIN
+  responses:
+    error400:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/auth/login
+        error: Invalid data
+    error401:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/auth/login
+        error: Invalid credentials
+    error403:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/auth/me
+        error: Forbidden
+    error500:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/auth/me
+        error: Fatal error
+paths:
+  /api/auth/login:
+    post:
+      summary: Inicia la sesión de un usuario, guardando el token en una cookie
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: Correo electronico del usuario
+                  type: string
+                  format: email
+                password:
+                  description: Contraseña para iniciar sesión del usuario
+                  type: string
+              example:
+                email: mati@coder.com
+                password: hola1234
+      responses:
+        200:
+          description: Inicio de sesión exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Metodo con el cual se realizó la solicitud
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/login
+                  response: Logged in
+        400:
+          description: Falta algún dato válido para el inicio de sesión
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error400'
+        401:
+          description: Credenciales inválidas para el inicio de sesión
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error401'
+        500:
+          description: Error del lado del servidor al iniciar sesión
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error500'
