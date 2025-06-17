@@ -1,7 +1,7 @@
 import 'dotenv/config.js';
 import assert from 'assert';
 
-import {dbConnect} from "../../src/helpers/dbConnect.js"
+import dbConnect from '../../src/helpers/dbConnect.helper.js';
 import { productsManager } from '../../src/dao/managers/mongo.manager.js';
 
 describe(
