@@ -161,7 +161,7 @@ paths:
               schema:
                 $ref: '#/components/responses/error401'
         500:
-          description: Error del lado del servidor al iniciar sesión
+          description: Error del lado del servidor al crear el producto
           content:
             application/json:
               schema:
@@ -202,19 +202,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/cproducts
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la visualización del producto
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/products
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al intentar ver los productos
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/products
+                  error: Fatal error
 
   /api/products/{id}:
     get:
@@ -259,19 +301,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/products
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la visualización del producto
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/products
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al intentar ver el productos
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/products
+                  error: Fatal error
     put:
       summary: Actualiza un producto de la base de datos
       tags:
@@ -344,19 +428,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/products
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la editar del producto
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/products
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al intentar editar el productos
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/products
+                  error: Fatal error
     delete:
       summary: Elimina un producto de la base de datos
       tags:
@@ -371,7 +497,7 @@ paths:
         - cookieAuth: []
       responses:
         200:
-          description: Se observa el producto solicitado
+          description: Se observa el producto eliminado
           content:
             application/json:
               schema:
@@ -401,16 +527,58 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/products
+                  error: Invalid data
         401:
           description: Credenciales inválidas para eliminar el producto
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/products
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al intentar eliminar el productos
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/products
+                  error: Fatal error

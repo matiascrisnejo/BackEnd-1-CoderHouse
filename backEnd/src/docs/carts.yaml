@@ -91,7 +91,7 @@ responses:
       url: /api/carts
       error: Fatal error    
 
-path:
+paths:
   /api/carts:
     post:
       summary: Crea un carrito en la base de datos
@@ -133,19 +133,61 @@ path:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/carts
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la creación del carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/carts
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al crear el carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/carts
+                  error: Fatal error
     get:
       summary: Obtiene todos los carritos de la base de datos
       tags:
@@ -178,19 +220,61 @@ path:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/carts
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la consulta de los carritos
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/carts
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al consultar los carritos
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/carts
+                  error: Fatal error
   /api/carts/{id}:
     put:
       summary: Actualiza un carrito de la base de datos
@@ -207,25 +291,25 @@ path:
         content:
           application/json:
             schema:
-            type: object
-            properties:
-              product_id:
-                description: Id del producto
-                type: string
-              user_id:
-                description: Id del usuario del Carrito
-                type: string
-              quantity:
-                description: Cantidad del producto a agregar
-                type: number
-              state:
-                description: Estado del producto
-                type: string
-            example:
-              product_id: "123456788"
-              user_id: "987654322"
-              quantity: 3
-              state: "available"
+              type: object
+              properties:
+                product_id:
+                  description: Id del producto
+                  type: string
+                user_id:
+                  description: Id del usuario del Carrito
+                  type: string
+                quantity:
+                  description: Cantidad del producto a agregar
+                  type: number
+                state:
+                  description: Estado del producto
+                  type: string
+              example:
+                product_id: "123456788"
+                user_id: "987654322"
+                quantity: 3
+                state: "available"
       security:
         - cookieAuth: []
       responses:
@@ -256,19 +340,61 @@ path:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/carts
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la actualización del carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/carts
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al actualizar el carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/carts
+                  error: Fatal error
     delete:
       summary: Elimina un carrito de la base de datos 
       tags:
@@ -299,28 +425,71 @@ path:
                     description: Mensaje de éxito de la operación
                     type: string
                 example:
-                  method: DELETE
-                  url: /api/carts/{id}
-                  response: Carrito eliminado
+                  product_id: "123456789"
+                  user_id: "987654381"
+                  quantity: 2
+                  state: "available"
 
         400:
           description: Falta algún dato válido para la Eliminación del carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/carts
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la Eliminación del carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/carts
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al Eliminar el carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/carts
+                  error: Fatal error
       
       
   /api/carts/{id}/{state}:
@@ -344,13 +513,13 @@ path:
         content:
           application/json:
             schema:
-            type: object
-            properties:
-              state:
-                description: Estado del producto a actualizar
-                type: string
-            example:
-              state: "reserved"
+              type: object
+              properties:
+                state:
+                  description: Estado del producto a actualizar
+                  type: string
+              example:
+                state: "reserved"
       security:
         - cookieAuth: []
       responses:
@@ -371,25 +540,68 @@ path:
                     description: Mensaje de éxito de la operación
                     type: string
                 example:
-                  method: PATCH
-                  url: /api/carts/{id}/{state}
-                  response: Estado actualizado
+                  product_id: "123456789"
+                  user_id: "987654321"
+                  quantity: 2
+                  state: "available"
 
         400:
           description: Falta algún dato válido para la actualización del estado del carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/carts
+                  error: Invalid data
         401:
           description: Credenciales inválidas para la actualización del estado del carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/carts
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al actualizar el estado del carrito
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/carts
+                  error: Fatal error

@@ -143,16 +143,217 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error400'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/login
+                  error: Invalid data
         401:
           description: Credenciales inválidas para el inicio de sesión
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error401'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/login
+                  error: Invalid credentials
         500:
           description: Error del lado del servidor al iniciar sesión
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/error500'
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/login
+                  error: Fatal error
+  /api/auth/register:
+    post:
+      summary: Registra un nuevo usuario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Nombre del usuario a registrar
+                  type: string
+                date:
+                  description: Fecha de nacimiento del usuario a registrar
+                  type: string
+                  format: date
+                email:
+                  description: Correo electronico del usuario a registrar
+                  type: string
+                  format: email
+                password:
+                  description: Contraseña para iniciar sesión del usuario
+                  type: string
+                avatar:
+                  description: Imagen del usuario a registrar
+                  type: string
+              example:
+                name: matias
+                date: 1991-02-25
+                email: matis@coder.com
+                password: hola1234
+                avatar: https://cdn-icons-png.flaticon.com/512/266/266033.png
+      responses:
+        201:
+          description: Usuario registrado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/register
+        400:
+          description: Falta algún dato válido para el registro del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/register
+                  error: Invalid data
+        500:
+          description: Error del lado del servidor al registrar el usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/register
+                  error: Fatal error
+  /api/auth/signout:
+    post:
+      summary: Cierra la sesión del usuario, eliminando el token de la cookie
+      tags:
+        - Auth
+      responses:
+        200:
+          description: Cierre de sesión exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  response:
+                    description: Mensaje de éxito de la operación
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/signout
+        500:
+          description: Error del lado del servidor al cerrar sesión
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/signout
+        401:
+          description: No se puede cerrar sesión porque el usuario no está autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: post
+                  url: /api/auth/signout
+    
