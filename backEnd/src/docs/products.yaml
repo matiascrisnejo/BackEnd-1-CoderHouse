@@ -28,19 +28,19 @@ components:
           description: Identificación del dueño del producto 
           type: string
       example:
-        title: "Producto 1"
-        description: "Descripcion producto 1"
-        category: "Categoria del producto 1"
+        title: Producto 1
+        description: Descripcion producto 1
+        category: Categoria del producto 1
         image: URL del producto 1
         price: 100
         stock: 100
         onsale: true
-        owner_id: "6828fd7831a573c2ad36da96"
+        owner_id: 6828fd7831a573c2ad36da96
   securitySchemes:
     cookieAuth:
-    type: apiKey
-    in: cookie
-    name: token
+      type: apiKey
+      in: cookie
+      name: token
   responses:
     error400:
       type: object
