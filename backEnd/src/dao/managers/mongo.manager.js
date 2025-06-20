@@ -7,14 +7,14 @@ class MongoManager{
     constructor(model){
         this.model = model
     }
-    createOne = async (data) => this.model.create(data)
-    readAll = async (filter) => this.model.find(filter)
-    readOne = async (obj) => this.model.findOne(obj)
-    readById = async (id) => this.model.findById(id)
-    updateOne = async (obj, data) => this.model.findOneAndUpdate(obj, data)
-    updateById = async (id, data) => this.model.findOneAndUpdate(id, data)
-    destroyOne = async (obj) => this.model.findOneAndDelete(obj)
-    destroyById = async (id) => this.model.findOneAndDelete(id)
+    createOne = async (data) => await this.model.create(data);
+    readAll = async (filter) => await this.model.find(filter).lean();
+    readBy = async (data) => await this.model.findOne(data).lean();
+    readById = async (id) => await this.model.findById(id).lean();
+    updateOne = async (id, data) => await this.model.findOneAndUpdate({ _id: id }, data, { new: true });
+    updateById = async (id, data) => await this.model.findByIdAndUpdate(id, data, { new: true });
+    destroyOne = async (id) => await this.model.findOneAndDelete({ _id: id });
+    destroyById = async (id) => await this.model.findByIdAndDelete(id);
 
 }
 

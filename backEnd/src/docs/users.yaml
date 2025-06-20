@@ -1,0 +1,546 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          description: Nombre del usuario.
+          type: string
+        date:
+          description: Fecha de nacimiento del usuario.
+          type: string
+        email:
+          description: The user's email address.
+          type: string
+          format: email
+        password:
+          description: Contraseña del usuario.
+          type: string
+        avatar:
+          description: Imagen dekl usuario
+          type: string
+        rol:
+          description: Rol del usuario.
+          type: string
+      example:
+        name: "matias cris"
+        date: "1990-01-23"
+        email: "matt@coder.ar"
+        password: "hola1234"
+        avatar: "https://example.com/avatar.jpg"
+        rol: "ADMIN"
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+  responses:
+    error400:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/users
+        error: Invalid data
+    error401:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/users
+        error: Invalid credentials
+    error403:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/users
+        error: Forbidden
+    error500:
+      type: object
+      properties:
+        method:
+          description: Metodo con el cual se realizó la solicitud
+          type: string
+        url:
+          description: Ruta a la cual se realizó la solicitud
+          type: string
+        error:
+          description: Mensaje de error de la operación
+          type: string
+      example:
+        method: post
+        url: /api/users
+        error: Fatal error
+paths:
+  /api/users:
+    post:
+      summary: Crea un nuevo usuario.
+      tags:
+        - Users
+      description: Crea un nuevo usuario con los datos proporcionados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Usuario creado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Mensaje de exito de la operacion.
+                    type: string
+                example:
+                  name: "matias cris"
+                  date: "1990-01-23"
+                  email: "matt@coder.ar"
+                  password: "hola1234"
+                  avatar: "https://example.com/avatar.jpg"
+                  rol: "ADMIN"
+        400:
+          description: Error de validación de datos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error400'
+        401:
+          description: Credenciales inválidas.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error401'
+        500:
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/error500'
+    get:
+      summary: Obtiene todos los usuarios.
+      tags:
+        - Users
+      description: Obtiene una lista de todos los usuarios registrados.
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Lista de usuarios obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Lista de usuarios.
+                    type: string
+                example:
+                  name: "matias cris"
+                  date: "1990-01-23"
+                  email: "matt@coder.ar"
+                  password: "hola1234"
+                  avatar: "https://example.com/avatar.jpg"
+                  rol: "ADMIN"
+        400:
+          description: Falta algún dato para visualizar los usuarios.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Mensaje de error de la operación.
+                    type: string
+                example:
+                  method: get
+                  url: /api/users
+                  response: Invalid data
+        401:
+          description: Credenciales inválidas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Mensaje de error de la operación.
+                    type: string
+                example:
+                  method: get
+                  url: /api/users
+                  response: Invalid credentials
+        500:
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Mensaje de error de la operación.
+                    type: string
+                example:
+                  method: get
+                  url: /api/users
+                  response: Fatal error
+  /api/users/{id}:
+    get:
+      summary: Obtiene un usuario por su ID.
+      tags:
+        - Users
+      description: Obtiene los detalles de un usuario específico utilizando su ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del usuario a obtener.
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Usuario obtenido exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Lista de usuarios.
+                    type: string
+                example:
+                  name: "matias cris"
+                  date: "1990-01-23"
+                  email: "matt@coder.ar"
+                  password: "hola1234"
+                  avatar: "https://example.com/avatar.jpg"
+                  rol: "ADMIN"
+        400:
+          description: Error de validación de datos.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/users'
+                  error: Invalid data
+        401:
+          description: Credenciales inválidas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/users
+                  error: Invalid credentials
+        500:
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: get
+                  url: /api/users
+                  error: Fatal error
+    put:
+      summary: Actualiza un usuario por su ID.
+      tags:
+        - Users
+      description: Actualiza los detalles de un usuario específico utilizando su ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del usuario a actualizar.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Usuario actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Mensaje de exito de la operacion.
+                    type: string
+                example:
+                  name: "matias crisn"
+                  date: "1990-01-23"
+                  email: "matt@coder.ar"
+                  password: "hola1234"
+                  avatar: "https://example.com/avatar.jpg"
+                  rol: "ADMIN"
+        400:
+          description: Falta algún dato para actualizar el usuarios.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/users
+                  error: Invalid data
+        401:
+          description: Credenciales inválidas. para actualizar el usuario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/users
+                  error: Invalid credentials
+        500:
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: put
+                  url: /api/users
+                  error: Fatal error
+    delete:
+      summary: Elimina un usuario por su ID.
+      tags:
+        - Users
+      description: Elimina un usuario específico utilizando su ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID del usuario a eliminar.
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: Usuario eliminado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método utilizado.
+                    type: string
+                  url:
+                    description: Ruta a la cual se realizó la solicitud.
+                    type: string
+                  response:
+                    description: Mensaje de exito de la operacion.
+                    type: string
+                example:
+                  method: delete
+                  url: /api/users
+        400:
+          description: Falta algún dato para eliminar el usuarios.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/users
+                  error: Invalid data
+        401:
+          description: Credenciales inválidas. para eliminar el usuario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/users
+                  error: Invalid credentials
+        500:
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  method:
+                    description: Método usado
+                    type: string
+                  url:
+                    description: Ruta solicitada
+                    type: string
+                  error:
+                    description: Descripción del error
+                    type: string
+                example:
+                  method: delete
+                  url: /api/users
+                  error: Fatal error

@@ -1,7 +1,7 @@
 import CustomRouter from "../../helpers/CustomRouter.helpers.js";
 import { addProductToCart, readProductsFromUser, updateQuantity, updateState, removeProductFromCart } from "../../controllers/carts.controller.js";
 
-class ProductsRouter extends CustomRouter {
+class CartsRouter extends CustomRouter {
   constructor() {
     super();
     this.init();
@@ -15,5 +15,5 @@ class ProductsRouter extends CustomRouter {
   };
 }
 
-const productsRouter = new ProductsRouter();
-export default productsRouter.getRouter();
+const CartsRouter = new CartsRouter();
+export default CartsRouter.getRouter();
