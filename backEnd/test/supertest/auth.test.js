@@ -2,6 +2,7 @@ import "dotenv/config.js"
 import {expect} from "chai"
 import supertest from "supertest"
 
+console.log(process.env.PORT)
 const requester = supertest(`http://localhost:${process.env.PORT}/api`) 
 
 describe(
@@ -51,7 +52,7 @@ describe(
                 const response = await requester.post("/auth/online").set('Cookie', cookies)
                 const {status, _body} = response
                 expect(status).to.be.equals(200)
-                expect(_body.response).to.be.equals("It´s online")
+                expect(_body.response).to.be.equals("It's online")
             }
         )
         it(

@@ -5,6 +5,7 @@
 // import { cartsManager } from '../../src/dao/managers/mongo.manager.js'; 
 // import { usersManager } from '../../src/dao/managers/mongo.manager.js';
 // import { productsManager } from '../../src/dao/managers/mongo.manager.js';
+// import { expect } from 'chai';
 
 // describe(
 //     "TESTING: Servicio de Carritos",
@@ -16,8 +17,8 @@
 //             await dbConnect(process.env.LINK_DB)
 //             //Usuario de prueba
 //             const user = await usersManager.createOne({
-//                 name: "marko twwqq",
-//                 email: "markoweqwe@coder.com",
+//                 name: "marko twqqqq",
+//                 email: "markoweqeqq@coder.com",
 //                 password: "hola1234",
 //                 avatar: "https://example.com/avatar.png",
 //                 role: "ADMIN",
@@ -40,14 +41,14 @@
 //             async()=> {
 //                 const response = await cartsManager.createOne({user_id: userId, product_id: productId})
 //                 cartId = response._id
-//                 assert.ok(response._id)
+//                 expect(response).to.have.property('_id');
 //             }
 //         )
 //         it(
 //             "Se debe leer todos los carritos de la base de datos",
 //             async()=>{
 //                 const response = await cartsManager.readAll()
-//                 assert.ok(response.length > 0)
+//                 expect(Array.isArray(response)).to.be.true;
 //             }
 //         )
 //         it("Se debe modificar un carrito de la base de datos", 
@@ -57,6 +58,7 @@
 //                     { quantity: 5 }
 //                 )
 //                 assert.strictEqual(response.quantity, 5);
+//                 expect(response).to.have.property('quantity', 5);
 //             }
 //         )
 //         it(
@@ -65,6 +67,7 @@
 //                 const response = await cartsManager.destroyById(cartId)
 //                 const one = await cartsManager.readById(cartId)
 //                 assert.ok(one === null)
+//                 expect(one).to.be.a("null");
 //             }
 //         )        
 //     }
