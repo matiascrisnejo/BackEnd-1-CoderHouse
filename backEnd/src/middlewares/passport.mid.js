@@ -74,7 +74,8 @@ passport.use(
     /* callback done con la logica necesaria para la estrategia */
     async (req, accesToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ email: profile.id });
+        //let user = await User.findOne({ email: profile.id });
+        let user = await usersManager.readBy({ email: profile.id }); 
         if (!user) {
           user = {
             email: profile.id,
@@ -82,7 +83,8 @@ passport.use(
             avatar: profile.photos[0].value,
             password: createHash(profile.id),
           };
-          user = await User.createOne(user);
+          //user = await User.createOne(user);
+          user = await usersManager.createOne(user);
         }
         const token = createToken({
           email: user.email,
@@ -107,7 +109,8 @@ passport.use(
     async (data, done) => {
       try {
         const { user_id } = data;
-        const user = await User.findById(user_id);
+        //const user = await User.findById(user_id);
+        const user = await usersManager.readById(user_id);
         if (!user) {
           return done()
         }
@@ -129,7 +132,8 @@ passport.use(
     async (data, done) => {
       try {
         const { user_id, role } = data;
-        const user = await User.findById(user_id);
+        //const user = await User.findById(user_id);
+        const user = await usersManager.readById(user_id);
         if (user.role !== "ADMIN") {
           return done(null)
         }

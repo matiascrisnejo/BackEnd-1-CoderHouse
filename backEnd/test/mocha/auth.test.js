@@ -55,17 +55,5 @@
 //                 }
 //             }
 //         )
-//         it(
-//             "Iniciar sesión con un usuario existente",
-//             async()=>{
-//                 const response = await usersManager.readBy({email: admin.email})
-//                 if (response) {
-//                     cookies = await login(admin.email, admin.password)
-//                     assert.ok(cookies, "Debe iniciar sesión correctamente y obtener cookies");
-//                 } else {
-//                     assert.fail("El usuario no existe");
-//                 }
-//             }
-//         )
 //     }
 // )

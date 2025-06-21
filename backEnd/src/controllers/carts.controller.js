@@ -8,6 +8,7 @@ const addProductToCart = async (req, res) => {
     user_id: _id,
     quantity,
   });
+  console.log("Datos recibidos en el controlador:", req.body);
   res.json201(response);
 };
 const readProductsFromUser = async (req, res) => {

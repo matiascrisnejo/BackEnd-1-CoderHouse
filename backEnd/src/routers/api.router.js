@@ -3,6 +3,7 @@ import authRouter from "./api/auth.router.js";
 import productsRouter from "./api/products.router.js";
 import usersRouter from "./api/users.router.js";
 import mocksRouter from "./api/mocks.router.js";
+import cartsRouter from "./api/carts.router.js";
 
 const apiRouter = Router()
 
@@ -11,6 +12,7 @@ apiRouter.use('/auth', authRouter)
 apiRouter.use('/products', productsRouter)
 apiRouter.use('/users', usersRouter)
 apiRouter.use('/mocks', mocksRouter)
+apiRouter.use('/carts', cartsRouter)
 apiRouter.get('/sumar/:n1/:n2', (req, res) => {
     const { n1, n2 } = req.params
     res.status(200).json({result: sumar(n1, n2)})

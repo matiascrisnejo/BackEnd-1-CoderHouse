@@ -23,7 +23,7 @@
 //                 role: "ADMIN",
 //             });
 //             userId = user._id;
-//             // Crear un producto
+//             // Crea un producto
 //             const product = await productsManager.createOne({
 //                 title: "mouse",
 //                 description: "Descripción del mouse",
