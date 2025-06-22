@@ -2,7 +2,7 @@
 FROM node
 
 # se establece el nombre de la app / directorio de trabajo
-WORKDIR /coderserver-70435
+WORKDIR /coderserver-final
 
 # se copian los archivos de la app al contenedor
 COPY package.json ./
