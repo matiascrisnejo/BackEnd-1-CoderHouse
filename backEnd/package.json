@@ -14,7 +14,7 @@
     "build-image": "docker build -t coderserver-final .",
     "run-image": "docker run -p 8080:8080 coderserver-final",
     "retag-image": "docker tag coderserver-final matycris/coderserver-final:1.0.0",
-    "push-image": "docker push matycris/coderserver1.0.0",
+    "push-image": "docker push matycris/coderserver-final:1.0.0",
     "apply-manifest": "kubectl apply -f manifest.yaml",
     "service-mini": "minikube service codercommerce-service",
     "mocha": "mocha ./test/mocha",
